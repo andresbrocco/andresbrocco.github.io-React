@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"module": "CommonJS",
+		"esModuleInterop": true,
+		"target":"ES6",
+		"jsx": "react",
+		"moduleResolution": "Node",
+		"strict": true,
+		"noEmit": true,
+		"allowJs": true,
+		"isolatedModules": true
+	},
+	"include": ["src"]
+}
