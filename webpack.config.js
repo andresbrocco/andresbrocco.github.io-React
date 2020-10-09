@@ -27,15 +27,9 @@ const config = {
 			extensions: ['*', '.ts', '.tsx', '.js', '.jsx']
 		},
     output: {
-        path: path.resolve(__dirname, 'dist/'),
-        publicPath: '/dist/',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
         filename: 'bundle.js'
-    },
-    devServer: {
-        contentBase: path.join(__dirname, 'public/'),
-        port: 3000,
-        publicPath: 'http://localhost:3000/dist/',
-        hotOnly: true
     },
     plugins: [
 			new HtmlWebpackPlugin({
@@ -52,6 +46,10 @@ if (isProd) {
 	};
 } else {
 	config.devServer = {
+		contentBase: path.join(__dirname, 'public/'),
+		publicPath: 'http://localhost:3000/',
+		hotOnly: true,
+		writeToDisk: true,
 		port: 3000,
 		open: true,
 		hot: true,
