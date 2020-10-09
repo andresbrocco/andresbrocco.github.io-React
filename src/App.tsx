@@ -8,18 +8,7 @@ const sectionNames: string[] = ["Bio", "Skills", "Experience", "Accomplishments"
 
 const App = () => (
 	<div className="App">
-		<h1>Hello, World!!!!</h1>
-		<Grid container direction="column" justify="flex-start" alignItems="stretch">
-			<Grid item xs={12}>
-				<Navbar name={myName} sections={sectionNames} />
-			</Grid>
-			<Grid item xs={12}>
-				<Button variant="contained" color="primary">
-					Hello World
-				</Button>
-				<p>something here</p>
-			</Grid>
-		</Grid>
+		<Navbar name={myName} sections={sectionNames} />
 	</div>
 );
 
