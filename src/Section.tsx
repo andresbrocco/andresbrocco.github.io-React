@@ -1,6 +1,6 @@
 import React from 'react';
 
-export interface SectionInterface {
+interface SectionInterface {
 	name: string;
 	href: string;
 }
