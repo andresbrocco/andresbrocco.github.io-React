@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { Tabs, Tab } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Tabs, Tab } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
 import './Navbar.css';
 
 interface INavbar {
@@ -17,6 +18,18 @@ interface INavbar {
 	smallScreen: boolean;
 	currentTab: number;
 }
+
+interface IConditionalWrapper {
+	condition: boolean;
+	ifTrueWrapper(children: JSX.Element): JSX.Element;
+	ifFalseWrapper(children: JSX.Element): JSX.Element;
+	children: JSX.Element;
+}
+
+const ConditionalWrapper = (props: IConditionalWrapper): JSX.Element => 
+  props.condition ?
+		props.ifTrueWrapper(props.children) : 
+		props.ifFalseWrapper(props.children);
 
 export default function Navbar (props: INavbar) {
 	const name: string = props.name;
@@ -34,34 +47,50 @@ export default function Navbar (props: INavbar) {
 					<Typography variant="h6" className="name">
 						{name}
 					</Typography>
-					<Tabs 
-						style={smallScreen ? {display: 'none'} : {display: 'flex'}}
-						value={currentTab}
-						onChange={(_, val) => setCurrentTab(val)}
-						aria-label="Navigation Tabs"
-						centered
+
+					<ConditionalWrapper
+						condition={smallScreen}
+						ifTrueWrapper={children => 
+							<Drawer 
+								anchor='left'
+								open={showDrawer}
+								onClose={toggleDrawer}
+							>
+								{children}
+							</Drawer>
+						}
+						ifFalseWrapper={children => children}
 					>
-						{sections.map(sec => <Tab label={sec} key={sec} style={{minWidth:'20px'}} />)}
-					</Tabs>
-					<Drawer anchor='left' open={showDrawer && smallScreen} onClose={toggleDrawer}>
 						<Tabs 
 							value={currentTab}
 							onChange={(_, val) => setCurrentTab(val)}
 							aria-label="Navigation Tabs"
-							orientation="vertical"
+							orientation={smallScreen ? "vertical" : "horizontal"}
+							centered
 						>
 							{sections.map(sec => <Tab label={sec} key={sec} style={{minWidth:'20px'}} />)}
 						</Tabs>
-					</Drawer>
-					{smallScreen ? 
-					<IconButton 
-						edge="start"
-						color="inherit"
-						aria-label="Menu"
-						onClick={toggleDrawer}
-					>
-						<MenuIcon />
-					</IconButton>:<></>}
+					</ConditionalWrapper>
+
+					{
+						smallScreen ? 
+							<IconButton 
+								edge="start"
+								color="inherit"
+								aria-label="Menu"
+								onClick={toggleDrawer}
+							>
+								<MenuIcon />
+							</IconButton>
+						:
+							<IconButton 
+								edge="start"
+								color="inherit"
+								aria-label="Search"
+							>
+								<SearchIcon />
+							</IconButton>
+					}
 				</Toolbar>
 			</AppBar>
 		</nav>
