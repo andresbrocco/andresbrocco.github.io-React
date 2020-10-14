@@ -5,11 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import './Navbar.css';
 
 interface INavbar {
 	name: string;
@@ -31,6 +30,25 @@ const ConditionalWrapper = (props: IConditionalWrapper): JSX.Element =>
 		props.ifTrueWrapper(props.children) : 
 		props.ifFalseWrapper(props.children);
 
+const useStyles = makeStyles(theme => ({
+	name: {
+		cursor: "pointer",
+		minWidth: "250px",
+		[theme.breakpoints.up("lg")]: {
+			paddingLeft: "1.5em",
+		},
+	},
+	toolbar: {
+		justifyContent: "space-around",
+	},
+	tabs: {
+		margin: "auto",
+	},
+	tab: {
+		minWidth: "20px",
+	}
+}));
+
 export default function Navbar (props: INavbar) {
 	const name: string = props.name;
 	const sections: string[] = props.sections;
@@ -38,61 +56,62 @@ export default function Navbar (props: INavbar) {
 	const [currentTab, setCurrentTab] = useState(0);
 	const toggleDrawer = () => setShowDrawer(!showDrawer);
 	const theme = useTheme();
-	const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+	const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
+	const classes = useStyles();
 
 	return(
-		<nav className="Navbar">
+		<>
 			<AppBar position="fixed">
-				<Toolbar style={{justifyContent:'space-around'}}>
-					<Typography variant="h6" className="name">
-						{name}
+				<Toolbar className={classes.toolbar}>
+					<Typography variant="h5" className={classes.name}>
+						<b>{name}</b>
 					</Typography>
-
 					<ConditionalWrapper
 						condition={smallScreen}
 						ifTrueWrapper={children => 
 							<Drawer 
-								anchor='left'
-								open={showDrawer}
+							anchor='left'
+							open={showDrawer}
 								onClose={toggleDrawer}
 							>
 								{children}
-							</Drawer>
-						}
-						ifFalseWrapper={children => children}
+								</Drawer>
+								}
+								ifFalseWrapper={children => children}
 					>
 						<Tabs 
+							variant={smallScreen ? "scrollable" : "standard"}
 							value={currentTab}
 							onChange={(_, val) => setCurrentTab(val)}
 							aria-label="Navigation Tabs"
 							orientation={smallScreen ? "vertical" : "horizontal"}
+							className={classes.tabs}
 							centered
 						>
-							{sections.map(sec => <Tab label={sec} key={sec} style={{minWidth:'20px'}} />)}
+							{sections.map(sec => <Tab label={sec} key={sec} className={classes.tab}/>)}
 						</Tabs>
 					</ConditionalWrapper>
-
-					{
-						smallScreen ? 
-							<IconButton 
-								edge="start"
-								color="inherit"
-								aria-label="Menu"
-								onClick={toggleDrawer}
-							>
-								<MenuIcon />
-							</IconButton>
-						:
-							<IconButton 
-								edge="start"
-								color="inherit"
-								aria-label="Search"
-							>
-								<SearchIcon />
-							</IconButton>
+					{smallScreen ? 
+						<IconButton 
+						edge="start"
+						color="inherit"
+							aria-label="Menu"
+							onClick={toggleDrawer}
+						>
+							<MenuIcon />
+						</IconButton>
+					:
+						<IconButton 
+						edge="start"
+							color="inherit"
+							aria-label="Search"
+						>
+							<SearchIcon />
+						</IconButton>
 					}
 				</Toolbar>
 			</AppBar>
-		</nav>
+			<Toolbar />{/*necessary to avoid content behind the toolbar */}
+		</>
 	)
 }

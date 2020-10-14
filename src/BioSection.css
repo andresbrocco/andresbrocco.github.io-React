@@ -1,0 +1,6 @@
+.first ul li {
+	display: inline-block;
+	margin: 10px;
+	zoom: 1;
+	*display: inline; /* this fix is needed for IE7- */
+}
