@@ -50,8 +50,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Navbar (props: INavbar) {
-	const name: string = props.name;
-	const sections: string[] = props.sections;
 	const [showDrawer, setShowDrawer] = useState(false);
 	const [currentTab, setCurrentTab] = useState(0);
 	const toggleDrawer = () => setShowDrawer(!showDrawer);
@@ -64,7 +62,7 @@ export default function Navbar (props: INavbar) {
 			<AppBar position="fixed">
 				<Toolbar className={classes.toolbar}>
 					<Typography variant="h5" className={classes.name}>
-						<b>{name}</b>
+						<b>{props.name}</b>
 					</Typography>
 					<ConditionalWrapper
 						condition={smallScreen}
@@ -88,7 +86,7 @@ export default function Navbar (props: INavbar) {
 							className={classes.tabs}
 							centered
 						>
-							{sections.map(sec => <Tab label={sec} key={sec} className={classes.tab}/>)}
+							{props.sections.map(sec => <Tab label={sec} key={sec} className={classes.tab}/>)}
 						</Tabs>
 					</ConditionalWrapper>
 					{smallScreen ? 

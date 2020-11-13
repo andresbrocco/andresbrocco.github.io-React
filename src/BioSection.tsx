@@ -1,6 +1,5 @@
-import React from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme, makeStyles } from '@material-ui/core/styles';
+import React, { useRef, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap, faEnvelope, faFileAlt } from '@fortawesome/free-solid-svg-icons';
@@ -8,10 +7,12 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import './BioSection.css'
-import {ListItemIcon} from '@material-ui/core';
+import { ListItemIcon } from '@material-ui/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { websiteURL } from './index';
+import './BioSection.css'
+import { TweenMax } from 'gsap';
+
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -59,13 +60,14 @@ const useStyles = makeStyles(theme => ({
 		padding: "0em 1.5em 1.5em 1.5em",
 		maxWidth: "800px",
 		[theme.breakpoints.down("xs")]: {
+			padding: "0em 0.7em 1.5em 0.7em",
 			width: "100%",
 		},
 		[theme.breakpoints.up("sm")]: {
-			width: "85%",
+			width: "90%",
 		},
 		[theme.breakpoints.up("md")]: {
-			width: "70%",
+			width: "80%",
 		},
 		[theme.breakpoints.up("lg")]: {
 			width: "55%",
@@ -80,8 +82,14 @@ interface IEducationItem {
 };
 
 function EducationItem (props: IEducationItem): JSX.Element {
+	let educationItem: null|React.RefObject<HTMLLIElement>|HTMLLIElement = useRef<HTMLLIElement>(null);
+
+	useEffect(() => {
+		TweenMax.from(educationItem, 2, { opacity: 0, y:-30 })
+	}, []);
+
 	return(
-		<ListItem>
+		<ListItem ref={el => {educationItem = el}}>
 			<ListItemIcon>
 				<FontAwesomeIcon icon={faGraduationCap} size="2x"/>
 			</ListItemIcon>
@@ -99,12 +107,12 @@ interface IContactItem {
 function ContactItem (props: IContactItem): JSX.Element {
 	const url = new URL(props.url, 
 											process.env.NODE_ENV=="development" ? 
-											"http://localhost:3000" : websiteURL.href );
+											"http://localhost:3000" : websiteURL.href);
 	return (
 		<a href={url.href}>
 			<li>
 				<ListItemIcon>
-					<FontAwesomeIcon icon={props.icon} size="lg" />
+					<FontAwesomeIcon icon={props.icon} size="2x" />
 				</ListItemIcon>
 			</li>
 		</a>

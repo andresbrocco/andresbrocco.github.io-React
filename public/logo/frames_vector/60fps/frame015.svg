@@ -1,0 +1,33 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    id="vector"
+    width="24px"
+    height="24px">
+    <path
+        id="a1"
+        d="M 1.732 16.854 L 1.293 12.146 M 1.293 12.146 C 1.252 9.749 3.143 7.785 5.5 7.732 C 7.857 7.679 9.788 9.537 9.828 11.854 M 10.268 15.682 L 9.828 11.854"
+        fill="#000000"
+        fill-opacity="0"
+        stroke="#000000"
+        stroke-width="1"
+        stroke-linecap="round"/>
+    <path
+        id="a2"
+        d="M 3 13 L 9 13"
+        fill="#000000"
+        stroke="#000000"
+        stroke-width="1"
+        stroke-dasharray="2.666666666666666,3.333333333333334"
+        stroke-dashoffset="4.75"
+        stroke-linecap="round"/>
+    <path
+        id="s"
+        d="M 22.268 7.146 L 16.013 7.293 M 16.013 7.293 C 14.882 7.341 13.975 8.344 14.023 9.571 C 14.072 10.799 15.077 11.804 16.305 11.854 M 16.305 11.854 C 17.079 11.894 17.832 11.947 18.565 12 C 19.254 12.053 19.924 12.106 20.573 12.146 M 20.28 16.707 C 21.512 16.654 22.521 15.645 22.574 14.413 C 22.618 13.19 21.708 12.191 20.573 12.146 M 13.732 16.854 L 20.28 16.707"
+        fill="#000000"
+        fill-opacity="0"
+        stroke="#000000"
+        stroke-width="1"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>
